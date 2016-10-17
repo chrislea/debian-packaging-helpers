@@ -68,7 +68,7 @@ function package_distro {
 #------------------------------------------------------------
 function package_arch {
     local filename=${1}
-    echo $(echo ${filename} | cut -d'_' -f 3 | sed "s/\.deb//")
+    echo $(echo ${filename} | cut -d'_' -f 3 | sed "s/\..\+//")
 }
 
 
