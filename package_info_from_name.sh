@@ -14,7 +14,6 @@
 # returns
 #
 #    nodejs-dbg
-#
 #------------------------------------------------------------
 function package_name {
     local filename=${1}
@@ -32,7 +31,6 @@ function package_name {
 # returns
 #
 #    6.2.2
-#
 #------------------------------------------------------------
 function package_version {
     local filename=${1}
@@ -50,7 +48,6 @@ function package_version {
 # returns
 #
 #    xenial
-#
 #------------------------------------------------------------
 function package_distro {
     local filename=${1}
@@ -68,7 +65,6 @@ function package_distro {
 # returns
 #
 #    armhf
-#
 #------------------------------------------------------------
 function package_arch {
     local filename=${1}
