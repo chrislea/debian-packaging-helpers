@@ -141,4 +141,37 @@ function package_arch {
 }
 
 
+#------------------------------------------------------------
+# reprepro_cmd
+#
+# return the "correct" reprepro command based on the
+# filename.
+#
+#    reprepro_cmd nodejs-dbg_6.2.2-1nodesource1~xenial1_armhf.deb
+#
+# returns
+#
+#    reprepro --basedir . --gnupghome /home/user/.gnupg --keepunreferencedfiles includedeb xenial nodejs-dbg_6.2.2-1nodesource1~xenial1_armhf.deb
+#------------------------------------------------------------
+function reprepro_cmd {
+    local filename=${1}
+    local basedir=${basedir:-"."}
+    local gnupghome=${gnupghome:-"${HOME}/.gnupg"}
+    local distro=$(package_distro ${filename})
+    local include=""
+
+    if [ "x$(is_deb ${filename})" == "xtrue" ]; then
+        include="includedeb"
+    elif [ "x$(is_dsc ${filename})" == "xtrue" ]; then
+        include="includedsc"
+    else
+        echo "The file ${filename} doesn't appear to be a .deb or .dsc file... exiting..."
+        exit 1
+    fi
+
+    echo "reprepro --basedir ${basedir} --gnupghome ${gnupghome} --keepunreferencedfiles ${include} ${distro} ${filename}"
+
+}
+
+
 exit 0
