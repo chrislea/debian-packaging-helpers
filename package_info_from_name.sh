@@ -5,6 +5,75 @@
 #------------------------------------------------------------
 
 #------------------------------------------------------------
+# is_package_file
+#
+# is this a .deb or a .dsc file?
+#
+#    is_package_file nodejs-dbg_6.2.2-1nodesource1~xenial1.dsc
+#
+# returns
+#
+#    true
+#------------------------------------------------------------
+function is_package_file {
+    local filename=${1}
+    local file_extension=${filename:(-4)}
+
+    if [[ ${file_extension} == ".dsc" || ${file_extension} == ".deb" ]]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
+
+#------------------------------------------------------------
+# is_deb
+#
+# is this a .deb file?
+#
+#    is_deb nodejs-dbg_6.2.2-1nodesource1~xenial1.dsc
+#
+# returns
+#
+#    false
+#------------------------------------------------------------
+function is_deb {
+    local filename=${1}
+    local file_extension=${filename:(-4)}
+
+    if [[ ${file_extension} == ".deb" ]]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
+
+#------------------------------------------------------------
+# is_dsc
+#
+# is this a .dsc file?
+#
+#    is_deb nodejs-dbg_6.2.2-1nodesource1~xenial1.dsc
+#
+# returns
+#
+#    true
+#------------------------------------------------------------
+function is_dsc {
+    local filename=${1}
+    local file_extension=${filename:(-4)}
+
+    if [[ ${file_extension} == ".dsc" ]]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
+
+#------------------------------------------------------------
 # package_name
 #
 # return the name of the package.
