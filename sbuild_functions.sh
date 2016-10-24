@@ -161,7 +161,7 @@ function additional_arguments() {
     fi
 
     if [ "x${dist}" == "xprecise" ]; then
-        sbuild_args+=("--chroot-setup-commands=\"apt-get -y install clang-3.4\"")
+        sbuild_args+=("--chroot-setup-commands=\"apt-get update && apt-get -y install clang-3.4\"")
     fi
 
     echo -n $(IFS=" "; echo "${sbuild_args[*]}")
