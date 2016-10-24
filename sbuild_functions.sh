@@ -153,7 +153,7 @@ function additional_arguments() {
     declare -a sbuild_args
 
     if [ "x${dist}" == "xwheezy" ]; then
-        sbuild_args+=("--chroot-setup-commands=\"apt-get -y install curl apt-transport-https ca-certificates\"")
+        sbuild_args+=("--chroot-setup-commands=\"apt-get update && apt-get -y install curl apt-transport-https ca-certificates\"")
         sbuild_args+=("--chroot-setup-commands=\"echo 'deb https://deb.nodesource.com/clang-3.4 wheezy main' >> /etc/apt/sources.list\"")
         sbuild_args+=("--chroot-setup-commands=\"curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -\"")
         sbuild_args+=("--chroot-setup-commands=\"apt-get update\"")
