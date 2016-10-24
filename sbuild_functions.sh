@@ -170,7 +170,4 @@ function full_arguments() {
     echo "${base} ${additional}"
 }
 
-echo "Run Build:" $(run_build $1 $2)
-full_arguments $1 $2
-
 exit 0
