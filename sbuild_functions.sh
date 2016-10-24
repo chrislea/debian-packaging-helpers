@@ -169,5 +169,3 @@ function full_arguments() {
     local additional=$(additional_arguments $1 $2)
     echo "${base} ${additional}"
 }
-
-exit 0

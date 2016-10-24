@@ -172,6 +172,3 @@ function reprepro_cmd {
     echo "reprepro --basedir ${basedir} --gnupghome ${gnupghome} --keepunreferencedfiles ${include} ${distro} ${filename}"
 
 }
-
-
-exit 0
