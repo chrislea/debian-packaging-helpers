@@ -92,6 +92,29 @@ function run_build() {
 
 #------------------------------------------------------------
 #
+# ex: compiler_vars trusty
+#
+# returns a string with environment variables to set the
+# compilers to use
+#
+#------------------------------------------------------------
+function compiler_vars() {
+    local dist=$1
+    local cc="/usr/bin/gcc"
+    local cxx="/usr/bin/g++"
+
+    # we use clang on debian wheezy and ubuntu precise
+    if [[ "x${dist}" == "xwheezy" || "x${dist}" == "xprecise" ]]; then
+        cc="/usr/bin/clang"
+        cxx="/usr/bin/clang++"
+    fi
+
+    echo "CC=${cc} CXX=${cxx}"
+}
+
+
+#------------------------------------------------------------
+#
 # ex: base_arguments precise i386
 #
 # returns a string with arguments to sbuild that all build
@@ -101,20 +124,10 @@ function run_build() {
 function base_arguments() {
     local dist=$1
     local arch=$2
-    local cc="/usr/bin/gcc"
-    local cxx="/usr/bin/g++"
     local parallel_jobs=$(nproc)
 
     declare -a sbuild_args
 
-    # we use clang on debian wheezy and ubuntu precise
-    if [[ "x${dist}" == "xwheezy" || "x${dist}" == "xprecise" ]]; then
-        cc="/usr/bin/clang"
-        cxx="/usr/bin/clang++"
-    fi
-
-    sbuild_args+=("CC=${cc}")
-    sbuild_args+=("CXX=${cxx}")
     sbuild_args+=("--dist=${dist}")
     sbuild_args+=("--arch=${arch}")
     sbuild_args+=("--apt-update")
@@ -157,15 +170,15 @@ function additional_arguments() {
 
 #------------------------------------------------------------
 #
-# ex: full_arguments precise i386
+# ex: sbuild_cmd precise i386
 #
-# returns a string with all of th arguments to sbuild that
-# should be needed for the distro / architecture combo
-# provided
+# returns a string with the full build command to run a
+# build
 #
 #------------------------------------------------------------
-function full_arguments() {
+function sbuild_cmd() {
+    local cc_vars=$(compiler_vars $1)
     local base=$(base_arguments $1 $2)
     local additional=$(additional_arguments $1 $2)
-    echo "${base} ${additional}"
+    echo "${cc_vars} sbuild ${base} ${additional}"
 }
