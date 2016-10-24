@@ -7,6 +7,7 @@
 #
 #------------------------------------------------------------
 no_arm=("wheezy" "precise")
+no_v7=("wheezy" "precise")
 arch_options=("armhf" "i386" "amd64")
 dist_options=("wheezy" "jessie" "sid" "precise" "trusty" "xenial" "yakkety")
 
@@ -22,6 +23,24 @@ function build_armhf() {
     local dist=$1
 
     if [[ " ${no_arm[@]} " =~ " ${dist} " ]]; then
+        echo "false"
+    else
+        echo "true"
+    fi
+}
+
+
+#------------------------------------------------------------
+#
+# ex: build_v7 trusty
+#
+# returns true or false depending on the distro name
+#
+#------------------------------------------------------------
+function build_v7() {
+    local dist=$1
+
+    if [[ " ${no_v7[@]} " =~ " ${dist} " ]]; then
         echo "false"
     else
         echo "true"
@@ -77,12 +96,15 @@ possible_dist() {
 function run_build() {
     local dist=$1
     local arch=$2
+    local version=$3
 
     if [ "x$(possible_dist $1)" == "xfalse" ]; then
         echo "false"
     elif [ "x$(possible_arch $2)" == "xfalse" ]; then
         echo "false"
     elif [[ "x${arch}" == "xarmhf" && "x$(build_armhf $dist)" == "xfalse" ]]; then
+        echo "false"
+    elif [[ "x${version:0:1}" == "x7" && "x$(build_v7 $dist)" == "xfalse" ]]; then
         echo "false"
     else
         echo "true"
